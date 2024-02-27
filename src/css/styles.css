@@ -38,14 +38,14 @@ body {
 .btn {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #4caf50;
+  background-color: #34bfd7;
   color: #fff;
   border: none;
   cursor: pointer;
 }
 
 .btn:hover {
-  background-color: #45a049;
+  background-color: #2cbed7;
 }
 
 .img-container {

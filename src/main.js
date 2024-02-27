@@ -10,6 +10,7 @@ import { renderPic } from './js/render-functions.js';
 const refs = {
   formEl: document.querySelector('.search-form'),
   infoEl: document.querySelector('.img-container'),
+  allForm: document.querySelector('.block'),
 };
 
 refs.formEl.addEventListener('submit', async event => {
@@ -40,7 +41,7 @@ refs.formEl.addEventListener('submit', async event => {
 
   event.target.reset();
 
-  refs.formEl.scrollIntoView({
+  refs.allForm.scrollIntoView({
     behavior: 'smooth', // Плавный скроллинг
     block: 'start', // Выравнивание по верхней границе видимой области
   });
@@ -53,7 +54,6 @@ const lightbox = new SimpleLightbox('.image-box', {
   animationSpeed: 1000,
   scrollZoomFactor: 0.1,
   navText: ['←', '→'],
-
   captionsData: 'alt',
   captionDelay: 250,
 });
