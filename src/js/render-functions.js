@@ -1,7 +1,7 @@
 import iziToast from 'izitoast';
 import SimpleLightbox from 'simplelightbox';
 
-const lightbox = new SimpleLightbox('.image-box', {
+const lightbox = new SimpleLightbox('.img-container a', {
   overlay: true,
   overlayOpacity: 0.9,
   animationSpeed: 1000,

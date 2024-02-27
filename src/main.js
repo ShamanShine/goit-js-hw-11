@@ -59,7 +59,7 @@ refs.formEl.addEventListener('submit', async event => {
   });
 });
 
-const lightbox = new SimpleLightbox('.my-image', {
+const lightbox = new SimpleLightbox('.img-container', {
   overlay: true,
   overlayOpacity: 0.9,
   animationSpeed: 1000,
@@ -68,4 +68,4 @@ const lightbox = new SimpleLightbox('.my-image', {
   captionsData: 'alt',
   captionDelay: 250,
 });
-lightbox.refresh();
+// lightbox.refresh();
