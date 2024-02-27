@@ -1,7 +1,11 @@
+// Описаний у документації
 import iziToast from 'izitoast';
+// Додатковий імпорт стилів
 import 'izitoast/dist/css/iziToast.min.css';
 
+// Описаний у документації
 import SimpleLightbox from 'simplelightbox';
+// Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import { searchImages } from './js/pixabay-api.js';
@@ -10,7 +14,6 @@ import { renderPic } from './js/render-functions.js';
 const refs = {
   formEl: document.querySelector('.search-form'),
   infoEl: document.querySelector('.img-container'),
-  allForm: document.querySelector('.block'),
 };
 
 refs.formEl.addEventListener('submit', async event => {
@@ -29,7 +32,16 @@ refs.formEl.addEventListener('submit', async event => {
 
   try {
     const data = await searchImages(query);
-    renderPic(refs, data.hits);
+
+    if (data.hits && data.hits.length > 0) {
+      renderPic(refs, data.hits, 9); // Указываем количество изображений для отображения.Надо 9
+    } else {
+      iziToast.error({
+        message: 'No images found for the given query',
+        position: 'center',
+        transitionIn: 'fadeInLeft',
+      });
+    }
   } catch (error) {
     console.error(error);
     iziToast.error({
@@ -41,14 +53,13 @@ refs.formEl.addEventListener('submit', async event => {
 
   event.target.reset();
 
-  refs.allForm.scrollIntoView({
-    behavior: 'smooth', // Плавный скроллинг
-    block: 'start', // Выравнивание по верхней границе видимой области
+  refs.infoEl.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
   });
 });
 
-// Инициализация SimpleLightbox после добавления новых элементов
-const lightbox = new SimpleLightbox('.image-box', {
+const lightbox = new SimpleLightbox('.my-image', {
   overlay: true,
   overlayOpacity: 0.9,
   animationSpeed: 1000,
