@@ -1,11 +1,7 @@
-// Описаний у документації
 import iziToast from 'izitoast';
-// Додатковий імпорт стилів
 import 'izitoast/dist/css/iziToast.min.css';
 
-// Описаний у документації
 import SimpleLightbox from 'simplelightbox';
-// Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import { searchImages } from './js/pixabay-api.js';
@@ -36,7 +32,7 @@ refs.formEl.addEventListener('submit', async event => {
     const data = await searchImages(query);
 
     if (data.hits && data.hits.length > 0) {
-      renderPic(refs, data.hits, 9); // количество изображений для отображения.Надо 9
+      renderPic(refs, data.hits, 9); // количество изображений для отображения.Надо 22
     } else {
       iziToast.error({
         message: 'No images found for the given query',
