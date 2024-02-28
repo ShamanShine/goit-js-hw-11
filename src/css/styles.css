@@ -8,7 +8,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 156px;
+  /* margin-left: 156px; */
 
   justify-content: flex-start;
   height: 100vh;
@@ -69,7 +69,7 @@ body {
 
 .img-container {
   display: flex;
-  margin-left: 156px;
+  margin-left: 230px;
   margin-right: 156px;
 
   flex-wrap: wrap;
