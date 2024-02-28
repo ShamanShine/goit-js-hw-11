@@ -14,10 +14,12 @@ import { renderPic } from './js/render-functions.js';
 const refs = {
   formEl: document.querySelector('.search-form'),
   infoEl: document.querySelector('.img-container'),
+  loader: document.getElementById('.block'),
 };
 
 refs.formEl.addEventListener('submit', async event => {
   event.preventDefault();
+  // showLoader(); // Показать индикатор загрузки
 
   const query = event.target.elements.query.value.trim();
 
@@ -34,7 +36,7 @@ refs.formEl.addEventListener('submit', async event => {
     const data = await searchImages(query);
 
     if (data.hits && data.hits.length > 0) {
-      renderPic(refs, data.hits, 9); // Указываем количество изображений для отображения.Надо 9
+      renderPic(refs, data.hits, 9); // количество изображений для отображения.Надо 9
     } else {
       iziToast.error({
         message: 'No images found for the given query',
@@ -49,15 +51,20 @@ refs.formEl.addEventListener('submit', async event => {
       position: 'center',
       transitionIn: 'fadeInLeft',
     });
+    // } finally {
+    //   hideLoader(); // Скрыть индикатор загрузки вне зависимости от результата запроса
   }
 
   event.target.reset();
-
-  refs.infoEl.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start',
-  });
 });
+
+// function showLoader() {
+//   refs.loader.style.display = '.block';
+// }
+
+// function hideLoader() {
+//   refs.loader.style.display = 'none';
+// }
 
 const lightbox = new SimpleLightbox('.img-container', {
   overlay: true,
@@ -68,4 +75,3 @@ const lightbox = new SimpleLightbox('.img-container', {
   captionsData: 'alt',
   captionDelay: 250,
 });
-// lightbox.refresh();
