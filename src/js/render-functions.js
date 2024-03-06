@@ -11,7 +11,7 @@ const lightbox = new SimpleLightbox('.img-container a', {
   captionDelay: 250,
 });
 
-export function renderPic(refs, pics, limit = 9) {
+export function renderMarkup(refs, pics, limit = 18) {
   refs.infoEl.innerHTML = '';
 
   if (!pics || pics.length === 0) {
@@ -23,7 +23,7 @@ export function renderPic(refs, pics, limit = 9) {
     });
   } else {
     pics.slice(0, limit).forEach(pic => {
-      const markup = PicTemplate(pic);
+      const markup = createMarkup(pic);
       refs.infoEl.insertAdjacentHTML('beforeend', markup);
     });
 
@@ -31,23 +31,24 @@ export function renderPic(refs, pics, limit = 9) {
   }
 }
 
-function PicTemplate(pic) {
+function createMarkup(pic) {
   return `<div class="image-box">
-    <div class="general-frame">
+          <div class="general-frame">
 
-        <div class="image-container">
-            <a href="${pic.largeImageURL}" data-lightbox="gallery">
-            <img src="${pic.webformatURL}" alt="${pic.tags}" class="my-image">
-            </a>
-        </div>
-        <div class="image-body">
-            <ul class="ul-item">
-                <li class="image-li">Likes <span style="font-weight: normal;">${pic.likes}</span></li>
-                <li class="image-li">Views <span style="font-weight: normal;">${pic.views}</span></li>
-                <li class="image-li">Comments <span style="font-weight: normal;">${pic.comments}</span></li>
-                <li class="image-li">Downloads <span style="font-weight: normal;">${pic.downloads}</span></li>
-            </ul>
-        </div>
-  </div>
+            <div class="image-container">
+              <a href="${pic.largeImageURL}" data-lightbox="gallery">
+              <img src="${pic.webformatURL}" alt="${pic.tags}" class="my-image">
+              </a>
+            </div>
+             
+            <div class="image-body">
+                <ul class="ul-item">
+                 <li class="image-li">Likes <span style="font-weight: normal;">${pic.likes}</span></li>
+                 <li class="image-li">Views <span style="font-weight: normal;">${pic.views}</span></li>
+                 <li class="image-li">Comments <span style="font-weight: normal;">${pic.comments}</span></li>
+                 <li class="image-li">Downloads <span style="font-weight: normal;">${pic.downloads}</span></li>
+                </ul>
+              </div>
+          </div>
     </div>`;
 }

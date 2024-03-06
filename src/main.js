@@ -5,19 +5,21 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import { searchImages } from './js/pixabay-api.js';
-import { renderPic } from './js/render-functions.js';
+import { renderMarkup } from './js/render-functions.js';
 
 const refs = {
   formEl: document.querySelector('.search-form'),
   infoEl: document.querySelector('.img-container'),
-  loader: document.getElementById('.block'),
+  loader: document.querySelector('.loader'),
 };
 
-refs.formEl.addEventListener('submit', async event => {
+refs.formEl.addEventListener('submit', event => {
   event.preventDefault();
-  // showLoader(); // Показать индикатор загрузки
 
-  const query = event.target.elements.query.value.trim();
+  refs.infoEl.innerHTML = '';
+  refs.loader.classList.remove('is-hidden'); // Показать индикатор загрузки
+
+  const query = event.currentTarget.elements.query.value.trim();
 
   if (query === '') {
     iziToast.error({
@@ -28,39 +30,30 @@ refs.formEl.addEventListener('submit', async event => {
     return;
   }
 
-  try {
-    const data = await searchImages(query);
-
-    if (data.hits && data.hits.length > 0) {
-      renderPic(refs, data.hits, 9); // количество изображений для отображения.Надо 22
-    } else {
+  searchImages(query)
+    .then(data => {
+      if (data.hits && data.hits.length > 0) {
+        renderMarkup(refs, data.hits, 18); // количество изображений для отображения. Надо 18
+      } else {
+        iziToast.error({
+          message: 'No images found for the given query',
+          position: 'center',
+          transitionIn: 'fadeInLeft',
+        });
+      }
+    })
+    .catch(error => {
+      console.error(error);
       iziToast.error({
-        message: 'No images found for the given query',
+        message: 'Failed to fetch images. Please try again later.',
         position: 'center',
         transitionIn: 'fadeInLeft',
       });
-    }
-  } catch (error) {
-    console.error(error);
-    iziToast.error({
-      message: 'Failed to fetch images. Please try again later.',
-      position: 'center',
-      transitionIn: 'fadeInLeft',
+    })
+    .finally(() => {
+      refs.loader.classList.add('is-hidden');
     });
-    // } finally {
-    //   hideLoader(); // Скрыть индикатор загрузки вне зависимости от результата запроса
-  }
-
-  event.target.reset();
 });
-
-// function showLoader() {
-//   refs.loader.style.display = '.block';
-// }
-
-// function hideLoader() {
-//   refs.loader.style.display = 'none';
-// }
 
 const lightbox = new SimpleLightbox('.img-container', {
   overlay: true,
