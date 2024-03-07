@@ -21,6 +21,8 @@ refs.formEl.addEventListener('submit', event => {
 
   const query = event.currentTarget.elements.query.value.trim();
 
+  event.currentTarget.elements.query.value = ''; //очищаем поле ввода после отправки запроса
+
   if (query === '') {
     iziToast.error({
       message: 'Please enter a search query',
